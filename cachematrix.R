@@ -5,32 +5,32 @@
 # makeCacheMatrix function will create aspecial "matrix" object that can 
   ## cache its inverse for the input (which is an invertible square matrix) 
 
-makeCacheMatrix <- function(x = numeric()) {
-    m <- NULL
+makeCacheMatrix <- function(x = matrix()) {
+    a <- NULL
     set <- function(y) {
       x <<- y
-      m <<- NULL
+      a <<- NULL
     }
     get <- function() x
-    setmean <- function(mean) m <<- mean
-    getmean <- function() m
+    setinverse <- function(inverse) a <<- inverse
+    getinverse <- function() a
     list(set = set, get = get,
-         setmean = setmean,
-         getmean = getmean)
+         setinverse = setinverse,
+         getinverse = getinverse)
     
 # cacheSolve is a function that will invert the matrix of (makeCacheMatrix) If the inverse is calculated 
     (and the matrix has not changed), then the cachesolve should retrieve the 
     inverse from the cache    
     
 cacheSolve <- function(x, ...) {
-          m <- x$getmean()
+          a <- x$getinverse()
           if(!is.null(m)) {
             message ("getting cached data")
-            return (m)
+            return (a)
           }
           data <- x$get()
-          m <- mean(data, ...)
-          x$setmean(m)
-          m
+          a <- inversw(data, ...)
+          x$setinverse(a)
+          a
 }
 
